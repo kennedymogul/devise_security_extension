@@ -41,7 +41,17 @@ module Devise
       end
       
       def expire_password_after
-        self.class.expire_password_after
+        min_expiration = self.class.expire_password_after["default"]
+        self.roles.each do |user_role|
+          if self.class.expire_password_after[user_role].nil?
+          else
+            current_expiration = self.class.expire_password_after[user_role]
+            if (current_expiration) < min_expiration
+              min_expiration = current_expiration
+            end
+          end
+        end
+        min_expiration
       end
 
       private
