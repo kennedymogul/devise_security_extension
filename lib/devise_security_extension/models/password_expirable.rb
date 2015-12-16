@@ -43,12 +43,9 @@ module Devise
       def expire_password_after  
         expiration = self.class.expire_password_after
 
-        if (self.class.respond_to? "expire_password_keys_name") and (self.class.respond_to? "expire_password_keys")
-          expiration_arr = []
+        unless self.class.expire_password_keys_name.nil? || self.class.expire_password_keys.nil?
           expiration_arr = self.class.expire_password_keys.values_at(*(self.send(self.class.expire_password_keys_name)))
-          unless expiration_arr.empty?
-            expiration = expiration_arr.min
-          end
+          expiration = expiration_arr.min unless expiration_arr.empty? 
         end
         expiration
       end

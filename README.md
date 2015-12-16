@@ -18,6 +18,8 @@ Configuration and database schema for each module below.
 
 * **captcha support** for `sign_up`, `sign_in`, `recover` and `unlock` (to make automated mass creation and brute forcing of accounts harder)
 
+* **Multiple password expirations** can be configured based on key. 
+
 ## Getting started
 
 Devise Security Extension works with Devise on Rails 3.2 onwards. You can add it to your Gemfile after you successfully set up Devise (see [Devise documentation](https://github.com/plataformatec/devise)) with:
@@ -56,6 +58,10 @@ Devise.setup do |config|
 
   # Should the password expire (e.g 3.months)
   # config.expire_password_after = 3.months
+  # mattr_accessor :expire_password_keys_name
+  # @@expire_password_keys_name = nil
+  # mattr_accessor :expire_password_keys
+  # @@expire_password_keys = nil
 
   # Need 1 char of A-Z, a-z and 0-9
   # config.password_regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/

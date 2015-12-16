@@ -10,9 +10,9 @@ module Devise
   mattr_accessor :expire_password_after
   @@expire_password_after = 3.months
   mattr_accessor :expire_password_keys_name
-  @@expire_password_keys_name = :username
+  @@expire_password_keys_name = nil
   mattr_accessor :expire_password_keys
-  @@expire_password_keys = {"hello" => 2.days}
+  @@expire_password_keys = nil
 
   # Validate password for strongness
   mattr_accessor :password_regex
