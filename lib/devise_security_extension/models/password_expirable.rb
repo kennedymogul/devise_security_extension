@@ -40,19 +40,19 @@ module Devise
         self.password_changed_at
       end
       
-      def expire_password_after
-        min_expiration = self.class.expire_password_after["default"]
-        self.roles.each do |user_role|
-          if self.class.expire_password_after[user_role].nil?
-          else
-            current_expiration = self.class.expire_password_after[user_role]
-            if (current_expiration) < min_expiration
-              min_expiration = current_expiration
-            end
+      def expire_password_after  
+        expiration = self.class.expire_password_after
+
+        if (self.class.respond_to? "expire_password_keys_name") and (self.class.respond_to? "expire_password_keys")
+          expiration_arr = []
+          expiration_arr = self.class.expire_password_keys.values_at(*(self.send(self.class.expire_password_keys_name)))
+          unless expiration_arr.empty?
+            expiration = expiration_arr.min
           end
         end
-        min_expiration
+        expiration
       end
+      
 
       private
 
@@ -63,6 +63,8 @@ module Devise
 
       module ClassMethods
         ::Devise::Models.config(self, :expire_password_after)
+        ::Devise::Models.config(self, :expire_password_keys_name)
+        ::Devise::Models.config(self, :expire_password_keys)
       end
     end
 
